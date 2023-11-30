@@ -15,7 +15,7 @@
 #define PIN_MODERATE 33
 #define PIN_LOUD 25 
 const int sampleWindow = 1000; // Set the duration (in milliseconds) for collecting sound samples
-const int sampleWindowAvg = 10000;
+const int sampleWindowAvg = 10000; // Set the duration (in milliseconds) for collecting the average of the sound samples
 
 // Declare static variables for averaging decibel value
 static float sumOfLevels = 0;
@@ -26,9 +26,9 @@ WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
 
 // Function declarations
-float getDecibel();
+int getDecibel();
 void controlLEDs(int dB);
-void updateAveragedB(int dB);
+float calculateAverageDecibel(int dB);
 void connectToWifi();
 void connectToAWS();
 void publishMessage(float avgdB);
@@ -60,13 +60,16 @@ void loop() {
   Serial.println(dB);
 
   controlLEDs(dB);
-  updateAveragedB(dB);
-
-
+  
+  float average = calculateAverageDecibel(dB);
+  if (average > 0) {
+    publishMessage(average);
+  }
+  
   client.loop();
 }
 
-float getDecibel() {
+int getDecibel() {
   unsigned long startMillis = millis();
   unsigned long currentMillis = startMillis;
   unsigned int sample;
@@ -88,7 +91,7 @@ float getDecibel() {
   
   // set peaktopeak value (represents the amplitude)
   peakToPeak = signalMax - signalMin;
-  // scale the peakToPeak value from the analog readings range 30-330 to the range 48-66 (dB)
+  // scale the peakToPeak value from the analog readings range 150-335 to the range 28-100 (dB)
   int dB = map(peakToPeak, 150, 335, 28, 100);
   return dB;
 }
@@ -118,21 +121,21 @@ void controlLEDs(int dB) {
   Serial.println("\t");
 }
 
-void updateAveragedB(int dB) {
+float calculateAverageDecibel(int dB) {
   unsigned long currentMillis = millis();
   static unsigned long lastPublishTime = 0;
 
+  sumOfLevels += dB;
+  numberOfSamples++;
+
   if (currentMillis - lastPublishTime >= sampleWindowAvg) {
     float avgdB = sumOfLevels / numberOfSamples;
-    publishMessage(avgdB);
-
     lastPublishTime = currentMillis;
     sumOfLevels = 0;
     numberOfSamples = 0;
-  } else {
-    sumOfLevels += dB;
-    numberOfSamples++;
+    return avgdB;
   }
+  return 0;
 }
 
 void connectToWifi() {
@@ -148,7 +151,7 @@ void connectToWifi() {
   }
   if(WiFi.status() != WL_CONNECTED) {
     Serial.println("Error: Failed to connect!");
-    // take action
+    return;
   } else {
     Serial.print("Success! Connected at ");
     Serial.println(WiFi.localIP());
@@ -186,17 +189,16 @@ void connectToAWS() {
 }
 
 void publishMessage(float avgdB) {
-
   StaticJsonDocument<200> doc;
   doc["Average decibel level"] = avgdB;
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer);  // print to client
 
   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+
   Serial.print("Published to AWS: ");
   Serial.println(jsonBuffer);
   Serial.println("\t");
-  
 }
 
 void messageHandler(String &topic, String &payload) {
