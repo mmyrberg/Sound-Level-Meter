@@ -1,7 +1,15 @@
-//#define WIFI_NETWORK "OWNIT_24GHz_F4401F"
-//#define WIFI_PASSWORD "K73HD4JPTV"
-//#define WIFI_NETWORK "Snabbaste bredbandet i huset"
-//#define WIFI_PASSWORD "tuttlisa08"
+/*
+Sjöstan: 
+"OWNIT_24GHz_F4401F"
+"K73HD4JPTV"
+*/
+
+/*
+Kungsholmen:
+"Snabbaste bredbandet i huset"
+"tuttlisa08"
+*/
+
 #include <pgmspace.h>
 
 const char WIFI_SSID[] = "Snabbaste bredbandet i huset";
