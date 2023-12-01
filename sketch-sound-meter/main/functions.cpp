@@ -127,7 +127,7 @@ void connectToAWS() {
 
 void publishMessage(float avgdB) {
   StaticJsonDocument<200> doc;
-  doc["Average decibel level"] = avgdB;
+  doc["Avg decibel 20s"] = avgdB;
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer);  // print to client
 
