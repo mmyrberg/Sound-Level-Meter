@@ -9,7 +9,7 @@
 #include <ArduinoJson.h>
 #include "credentials.h"
 
-// Macro and constants
+// Macros and constants
 #define THINGNAME "esp32-board"
 #define WIFI_TIMEOUT_MS 2000
 #define AWS_IOT_PUBLISH_TOPIC "esp32/pub"
@@ -18,7 +18,7 @@
 #define PIN_QUIET 32
 #define PIN_MODERATE 33
 #define PIN_LOUD 25
-const int sampleWindow = 2000;
+const int sampleWindow = 1000;
 const int sampleWindowAvg = 20000;
 
 // Variables for averaging decibel value

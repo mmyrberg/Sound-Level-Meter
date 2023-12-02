@@ -2,8 +2,10 @@
 
 void setup() {
   Serial.begin(115200);
+
+  // Connect to Wifi and AWS
   connectToWifi();
-  delay(1000);  // Add a delay to ensure that WiFi connection is established before attempting AWS connection
+  delay(1000);
   connectToAWS();
 
   // Set the sensor pin and LED pins as input and output, respectively
@@ -21,13 +23,14 @@ void setup() {
 void loop() {
   int dB = getDecibel();
 
-  // Print instantaneous dB to Serial Monitor
+  // Print current dB to Serial Monitor
   Serial.print("Decibel now: ");
   Serial.println(dB);
 
+  // Control LEDs based on dB level
   controlLEDs(dB);
   
-  // Send average dB (10s) to AWS
+  // Send average dB (20s) to AWS
   float average = calculateAverageDecibel(dB);
   if (average > 0) {
     publishMessage(average);
