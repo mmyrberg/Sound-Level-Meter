@@ -18,7 +18,7 @@
 #define PIN_QUIET 32
 #define PIN_MODERATE 33
 #define PIN_LOUD 25
-const int sampleWindow = 1000;
+const int sampleWindow = 2000;
 const int sampleWindowAvg = 20000;
 
 // Variables for averaging decibel value
@@ -30,11 +30,11 @@ extern WiFiClientSecure net;
 extern MQTTClient client;
 
 // Function declarations
-void connectToWifi();
-void connectToAWS();
 int getDecibel();
 void controlLEDs(int dB);
 float calculateAverageDecibel(int dB);
+void connectToWifi();
+void connectToAWS();
 void publishMessage(float avgdB);
 void messageHandler(String &topic, String &payload);
 

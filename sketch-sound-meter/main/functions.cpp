@@ -15,7 +15,7 @@ int getDecibel() {
   unsigned int sample;
   unsigned int signalMax = 0;
   unsigned int signalMin = 4095;
-  float peakToPeak = 0;
+  unsigned int peakToPeak = 0;
   
   // Collect sound samples over a specified time window (sampleWindow)
   while (currentMillis - startMillis <= sampleWindow) {
