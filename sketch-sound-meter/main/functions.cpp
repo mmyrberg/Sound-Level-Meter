@@ -33,8 +33,8 @@ int getDecibel() {
   // Set peaktopeak value (represents the amplitude)
   peakToPeak = signalMax - signalMin;
 
-  // scale the peakToPeak value from the analog readings range 150-335 to the range 28-100 (dB)
-  int dB = map(peakToPeak, 150, 335, 28, 105);
+  // Scale the peakToPeak value from the analog readings range 150-335 to the range 28-100 (dB)
+  int dB = map(peakToPeak, 150, 335, 28, 100);
   return dB;
 }
 
