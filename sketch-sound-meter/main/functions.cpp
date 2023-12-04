@@ -151,7 +151,7 @@ void connectToAWS() {
 void publishMessage(float avgdB) {
   // Create a JSON document and serialize it into a string
   StaticJsonDocument<200> doc;
-  doc["Avg decibel 20s"] = avgdB;
+  doc["AvgDecibel20s"] = avgdB;
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer);
 
