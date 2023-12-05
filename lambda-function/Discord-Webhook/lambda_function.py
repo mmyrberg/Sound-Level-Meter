@@ -1,3 +1,7 @@
+# Make sure to include the discord_webhook library in a layer for the function
+# The Lib should be placed in a path "python/lib/python3.11/site-packages/",
+# ziped and then uploaded to AWS
+
 import os
 import json
 import requests
