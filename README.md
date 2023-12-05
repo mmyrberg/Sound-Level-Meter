@@ -146,24 +146,24 @@ The Lambda function, having identified an average decibel level surpassing 80.0,
 
 **Security Measure:** Certificate Management
 
-- Current Approach: Utilizing X.509 certificates for TLS connections to ensure secure communication between the ESP32 and AWS IoT Core.
-- Concerns: Hardcoding certificates and keys in the Arduino IDE poses security risks, especially with the potential for unauthorized access.
-- Proposed Improvement: Implement AWS Key Management Service (KMS) to centrally manage and distribute keys and certificates securely.
-- Benefits: Centralized control enhances security by safeguarding against unauthorized access. Simplifies key and certificate distribution, contributing to a more robust and scalable security infrastructure.
+- <ins>Current Approach:</ins> Utilizing X.509 certificates for TLS connections to ensure secure communication between the ESP32 and AWS IoT Core.
+- <ins>Concerns:</ins> Hardcoding certificates and keys in the Arduino IDE poses security risks, especially with the potential for unauthorized access.
+- <ins>Proposed Improvement:</ins> Implement AWS Key Management Service (KMS) to centrally manage and distribute keys and certificates securely.
+- <ins>Benefits:</ins> Centralized control enhances security by safeguarding against unauthorized access. Simplifies key and certificate distribution, contributing to a more robust and scalable security infrastructure.
 
 **Security Measure:** Least Privilege Principle
 
-- Current approach: Leveraging AWS roles and policies to customize privileges is limited.
-- Concerns: Potential security issues can arise from insufficiently customized roles and policies.
-- Suggested Improvement: Regularly review and update roles and policies to ensure access is limited to necessary resources.
-- Advantages: Following the principle of least privilege minimizes potential damage in the event of a security compromise.
+- <ins>Current approach:</ins> Leveraging AWS roles and policies to customize privileges is limited.
+- <ins>Concerns:</ins> Potential security issues can arise from insufficiently customized roles and policies.
+- <ins>Suggested Improvement:</ins> Regularly review and update roles and policies to ensure access is limited to necessary resources.
+- <ins>Advantages:</ins> Following the principle of least privilege minimizes potential damage in the event of a security compromise.
 
 **Security Measure:** Physical security considerations
 
-- Current approach: The physical security of the device is not considered to a greater extent.
-- Concerns: If someone gets unauthorized access to the hardware, they can damage the functionality of the system.
-- Suggested improvement: Evaluate and improve the physical security measures regularly to reduce potential risks.
-- Benefits: Reinforcement of physical security measures ensures system integrity by preventing accidental data manipulation.
+- <ins>Current approach:</ins> The physical security of the device is not considered to a greater extent.
+- <ins>Concerns:</ins> If someone gets unauthorized access to the hardware, they can damage the functionality of the system.
+- <ins>Suggested improvement:</ins> Evaluate and improve the physical security measures regularly to reduce potential risks.
+- <ins>Benefits:</ins> Reinforcement of physical security measures ensures system integrity by preventing accidental data manipulation.
 
 **Scalability:** 
 
