@@ -30,7 +30,7 @@ The AWS IoT Core Topic is configured with message routing rules, directing all i
 
 Additionally, if the incoming decibel level exceeds 80 dB, a message routing rule triggers a Lambda function, which sends an alert notification to Discord via a Webhook API.
 
-![Architecture](images/Architecture.png)
+![Architecture](images/architecture.png)
 *Architecture*
 
 ### Hardware setup
