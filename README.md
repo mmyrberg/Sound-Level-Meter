@@ -16,6 +16,9 @@ An IoT solution with Amazon Web Services (AWS) for monitoring and visualizing so
         - [Timestream-IAM-Grafana](#Timestream-IAM-Grafana)
         - [Trigger-Lamda-Discord](#Trigger-Lamda-Discord)
   - [Security and Scalability](#Security-and-Scalability)
+  - [Future improvements](#Future-improvements)
+    - [Storage options](#Storage-options)
+    - [Comparison data](#Comparison-data)
 
 ## Background
 This project was developed as part of the course "IoT and Cloud-services" at Nackademin. The objective was to address a hypothetical case or problem by creating an IoT solution using either AWS or Microsoft Azure.
@@ -170,3 +173,22 @@ The Lambda function, having identified an average decibel level surpassing 80.0,
 AWS scalability allows applications and services to scale up or down based on factors like increased user traffic, data processing needs, or computational demands. This flexibility is essential for maintaining performance, reliability, and cost-effectiveness in the face of varying workloads.
 
 AWS provides various tools and services that enable automatic scaling, which of some has been used in this project, such as Lambda for serverless computing and Timestream that can scale based on demand. This makes it easy for me as a user to get my performance requirements without over-provisioning resources, and thereby ensuring i'm only billed based on actual runtime.
+
+## Future improvements
+This project has been done with limited amount of time and resources, so there are several aspects that were not covered in this work but could be explored in future research to build upon this project. Some of them are discussed below.
+
+### Storage options
+As discussed in the solution overview there is only one AWS endpoint used for storage in this project; the Timestream database. While this approach aligns with the defined use case, where the primary goal is to trigger user notifications in response to sound levels exceeding 80 decibels and to visualize real-time data, future research could delve more into other options for storage solutions. Exploration of hybrid storage solutions, where for example critical data is stored in Timestream for real-time processing, and historical data is transitioned to an Amazon Simple Storage Service (S3 bucket) for long-term storage. This could contribute to optimizing storage costs while ensuring data accessibility and integrity. A suggestion would be to set up another AWS IoT Core Rule that directs the incoming data from the IoT device directly to an Amazon S3 bucket and then puts a time storage limit to periodically flush the Timestream database. Another suggestion is to use the Timestream UNLOAD statment, which enables you to export query results from Timestream to Amazon S3. Using the UNLOAD statement, it is possible to export time series data to selected S3 buckets in either Apache Parquet or Comma Separated Values (CSV) format. This provides flexibility to store, combine, and analyze time series data with other services. 
+```
+UNLOAD (SELECT statement)
+ TO 's3://bucket-name/folder'
+ WITH ( option = expression [, ...] )
+```
+
+### Comparison data
+To improve the functionality of this IoT solution and gain more meaningful insights, a proposal is to create a mechanism to compare sound sensor data with another information source. One suggestion for this is to integrate another Lambda function that retrieves information from an external resource and sends this information to the Timestream database and finally to the Grafana dashboard for a visual representation. The lambda function would be responsible for retrieving data from an external resource using an API. For example, if you live in Stockholm, you can use *"Miljödataportalen"* to retrieve information about *"Noise levels"* and compare it with your measured sound levels.
+
+```
+https://miljodataportalen.stockholm.se/api
+```
+
