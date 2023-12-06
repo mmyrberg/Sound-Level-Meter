@@ -111,7 +111,7 @@ The MQTT test client was also frequently used to monitor the MQTT messages being
 #### Message routing:
 Message Routing rules are configured to analyze and process incoming messages from the esp32 microcontroller and forward them to an AWS endpoint. In this case, the solution contains two different data flows:
 
-1. **Timestream-IAM-Grafana:** 
+##### **Timestream-IAM-Grafana:** 
 
 All incoming messages to IoT Core are routed to the Timestream database. Employing the rule `SELECT * FROM 'esp32/pub'`, Timestream captures and stores sound level telemetry over time.
 
@@ -128,7 +128,7 @@ Grafana was used as the visualization layer. It connected to Timestream using th
 ![Grafana dashboard](images/grafana-dashboard.png)
 *Grafana dashboard*
 
-2. **Trigger-Lamda-Discord:**
+##### **Trigger-Lamda-Discord:**
 
 In all incomming messages to the IoT Core where the sound sensor has detected a high decibel value, the rule `SELECT * FROM 'esp32/pub' WHERE AvgDecibel20s > 80.0` filters messages based on the condition that the average decibel level (AvgDecibel20s) exceeds 80.0.
 
@@ -142,7 +142,7 @@ The Lambda function, having identified an average decibel level surpassing 80.0,
 ![Discord notification](images/discord-notification.png)
 *Discord notification*
 
-## Security and Scalablility
+## Security and Scalability
 
 **Security Measure:** Certificate Management
 
