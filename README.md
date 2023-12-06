@@ -13,9 +13,9 @@ An IoT solution with Amazon Web Services (AWS) for monitoring and visualizing so
       - [Arduino IDE](#Arduino-IDE)
       - [AWS IoT Core](#AWS-IoT-Core)
       - [Message routing](#Message-routing)
-        - [Timestream Database-IAM-Grafana](#Timestream-Database-IAM-Grafana)
-        - [Action trigger-Lamda functions-Discord](#Action-trigger-Lamda-functions-Discord)
-  - [Security and scalability](#Security-and-scalability)
+        - [Timestream-IAM-Grafana](#Timestream-IAM-Grafana)
+        - [Trigger-Lamda-Discord](#Trigger-Lamda-Discord)
+  - [Security and Scalability](#Security-and-Scalability)
 
 ## Background
 This project was developed as part of the course "IoT and Cloud-services" at Nackademin. The objective was to address a hypothetical case or problem by creating an IoT solution using either AWS or Microsoft Azure.
@@ -111,7 +111,7 @@ The MQTT test client was also frequently used to monitor the MQTT messages being
 #### Message routing:
 Message Routing rules are configured to analyze and process incoming messages from the esp32 microcontroller and forward them to an AWS endpoint. In this case, the solution contains two different data flows:
 
-1. **Timestream database - IAM - Grafana:** 
+1. **Timestream-IAM-Grafana:** 
 
 All incoming messages to IoT Core are routed to the Timestream database. Employing the rule `SELECT * FROM 'esp32/pub'`, Timestream captures and stores sound level telemetry over time.
 
@@ -128,7 +128,7 @@ Grafana was used as the visualization layer. It connected to Timestream using th
 ![Grafana dashboard](images/grafana-dashboard.png)
 *Grafana dashboard*
 
-1. **Action trigger - Lamda functions - Discord:**
+2. **Trigger-Lamda-Discord:**
 
 In all incomming messages to the IoT Core where the sound sensor has detected a high decibel value, the rule `SELECT * FROM 'esp32/pub' WHERE AvgDecibel20s > 80.0` filters messages based on the condition that the average decibel level (AvgDecibel20s) exceeds 80.0.
 
